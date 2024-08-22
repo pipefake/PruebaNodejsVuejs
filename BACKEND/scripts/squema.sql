@@ -2,8 +2,10 @@
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
-    correo VARCHAR(255) UNIQUE NOT NULL
+    correo VARCHAR(255) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL
 );
+
 
 --Tabla de clientes
 CREATE TABLE clientes (
