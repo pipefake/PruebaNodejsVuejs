@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const userRoutes = require('./src/routes/userRoutes');
 const cors = require('cors');
+const clientsRoutes = require('./src/routes/clientsRouter');
 
 
 app.use(cors({
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', userRoutes);
+app.use('/', clientsRoutes);
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
