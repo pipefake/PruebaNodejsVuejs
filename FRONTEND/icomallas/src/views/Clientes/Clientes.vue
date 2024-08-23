@@ -111,6 +111,7 @@ export default {
   margin-bottom: 10px;
   text-align: justify;
   padding: 15px;
+      background: #f2f2f2;
 }
 
 .trash {
