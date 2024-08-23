@@ -6,7 +6,7 @@ const clientsRoutes = require('./src/routes/clientsRouter');
 
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:8080',
 }));
 
 app.use(express.json());
