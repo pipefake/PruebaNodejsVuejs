@@ -4,17 +4,30 @@ const validator = require('validator');
 
 // Listar clientes
 const listarClientes = async (req, res) => {
+    const usuarioCreadorId = parseInt(req.query.usuario_creador_id);
     const pagina = parseInt(req.query.pagina || 1);
     const limite = parseInt(req.query.limite) || 5;
+
+    if (isNaN(usuarioCreadorId)) {
+        return res.status(400).json({
+            mensaje: 'El ID del usuario creador es requerido'
+        });
+    }
+
     try {
         const offset = (pagina - 1) * limite;
 
-        const resultadoConteo = await pool.query('SELECT COUNT(*) FROM CLIENTES');
+        // Contar el total de clientes para el usuario creador especificado
+        const resultadoConteo = await pool.query(
+            'SELECT COUNT(*) FROM clientes WHERE usuario_creador_id = $1',
+            [usuarioCreadorId]
+        );
         const totalClientes = parseInt(resultadoConteo.rows[0].count);
 
+        // Obtener la lista de clientes para el usuario creador especificado
         const listaDeClientes = await pool.query(
-            'SELECT * FROM clientes LIMIT $1 OFFSET $2',
-            [limite, offset]
+            'SELECT * FROM clientes WHERE usuario_creador_id = $1 LIMIT $2 OFFSET $3',
+            [usuarioCreadorId, limite, offset]
         );
         const clientes = listaDeClientes.rows;
 
@@ -28,7 +41,8 @@ const listarClientes = async (req, res) => {
         console.error(err);
         res.status(500).json('Error al listar clientes');
     }
-}
+};
+
 
 // Registrar un nuevo cliente
 const registrarCliente = async (req, res) => {

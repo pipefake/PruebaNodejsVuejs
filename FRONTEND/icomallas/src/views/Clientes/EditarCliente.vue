@@ -76,7 +76,8 @@ export default {
  const handleSubmit = async () => {
   const token = sessionStorage.getItem('token');
 
-  const usuario_creador_id = localStorage.getItem('usuario_creador_id');
+  const usuario_creador = localStorage.getItem('usuario');
+  console.log(usuario_creador);
   if (!token) {
     console.error('Token no encontrado');
     return;
@@ -96,7 +97,7 @@ export default {
         razon_social: razon_social.value,
         correo: correo.value,
         telefono: telefono.value,
-        usuario_creador_id: usuario_creador_id,
+        usuario_creador_id: usuario_creador,
         estado: estado.value ? 'Activo' : 'Inactivo'
       },
       {

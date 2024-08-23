@@ -44,9 +44,8 @@ export default {
     const nit = ref('');
     const correo = ref('');
     const telefono = ref('');
-    const estado = ref(false); // Default to false for a checkbox
-    const usuario = sessionStorage.getItem('usuario'); // Ensure this is properly retrieved
-
+    const estado = ref(false); 
+    const usuario = localStorage.getItem('usuario');
    const handleSubmit = async () => {
   const token = sessionStorage.getItem('token');
   if (!token) {

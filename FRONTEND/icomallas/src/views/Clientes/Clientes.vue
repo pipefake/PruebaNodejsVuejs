@@ -35,6 +35,7 @@ export default {
     const router = useRouter();
     const clientes = ref([]);
     const error = ref('');
+    const usuarioCreadorId = localStorage.getItem('usuario'); // Ajusta según la estructura del objeto almacenado
 
     const getClientes = async () => {
       const token = sessionStorage.getItem('token');
@@ -42,12 +43,19 @@ export default {
         error.value = 'Token no encontrado';
         return;
       }
+      if (!usuarioCreadorId) {
+        error.value = 'ID del usuario creador no encontrado';
+        return;
+      }
       try {
         const response = await axios.get('http://localhost:3001/clientes/consultar', {
-          headers: { Authorization: token }
+          headers: { Authorization: token },
+          params: {
+            usuario_creador_id: usuarioCreadorId
+          }
         });
         clientes.value = response.data.clientes || [];
-        if (response.data.mensaje !== 'Okay') {
+        if (response.data.mensaje !== 'Operación exitosa') {
           error.value = 'Respuesta de la API indica error: ' + response.data.mensaje;
         }
       } catch (err) {
@@ -69,10 +77,10 @@ export default {
         const response = await axios.delete(`http://localhost:3001/clientes/borrar/${id}`, {
           headers: { Authorization: token }
         });
-        if (response.data.mensaje !== 'Deleted Cliente') {
+        if (response.data.mensaje !== 'Cliente eliminado') {
           error.value = 'Error al eliminar el cliente: ' + response.data.mensaje;
         } else {
-          getClientes();
+          getClientes(); // Refrescar la lista después de eliminar un cliente
         }
       } catch (err) {
         error.value = 'Error al eliminar cliente: ' + (err.response ? err.response.data : err.message);
