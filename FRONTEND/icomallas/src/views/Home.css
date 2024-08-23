@@ -1,0 +1,227 @@
+* {
+    margin: 0;
+  }
+  
+  /*Estilos header*/
+  .header {
+    margin-top: 65px;
+    margin-bottom: 5px;
+  }
+  
+  /*Estilos Home*/
+  .ingresarHome {
+    
+  }
+  
+  /*Estilos ListaEmpleado*/
+  .btnAdd {
+    background-color: black;
+    border-radius: 65%;
+    color: white;
+    font-size: 45px;
+    position: fixed;
+    right: 24px;
+    top: 79%;
+    width: 65px;
+    height: 61px;
+    padding: 0;
+    border: none;
+   
+  }
+  
+  .divEmpleado {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #f1f4ff;
+    border: solid 2px #1f41bb;
+    border-radius: 10px;
+    height: 49px;
+    width: 90%;
+    margin: 10px;
+  }
+  
+  .trash {
+    background: none;
+    border: none;
+    margin-right: 8px;
+  }
+  
+  .divEmpleado > p {
+    padding: 12px 15px;
+  }
+  
+  .contEmpleados {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /*Estilos Home*/
+  .Home {
+    background-image: url('http://localhost:3000/static/media/FondoIInicio.6e7f9aa….jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .foto {
+    border-radius: 50%;
+  }
+  
+  .blueTittle {
+    color: #1f41bb;
+  }
+  
+  .loginBtn {
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #1f41bb;
+    color: white;
+    margin: 12px;
+  }
+  
+  .input {
+    width: 80%;
+    padding: 20px;
+    border: none;
+    border-radius: 12px;
+    margin: 14px;
+    background: #eaefff;
+  }
+  
+  .inputEmail {
+    background-color: #f1f4ff;
+    font-size: 16px;
+  }
+  
+  .inputEmail::placeholder {
+    color: #626262;
+  }
+  
+  .registerBtn {
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    margin: 12px;
+    color: black;
+  }
+  
+  .smallText {
+    font-size: 14px;
+  }
+  
+  .largeText {
+    font-size: 35px;
+  }
+  
+  .regularText {
+    font-size: 20px;
+  }
+  
+  /* Pagination Styles */
+  .pagination {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .pagination .page-item {
+    margin: 0 5px;
+  }
+  
+  .pagination .page-link {
+    display: block;
+    padding: 10px;
+    color: #007bff;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .pagination .active .page-link {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+  }
+  
+  .pagination .page-link:hover {
+    background-color: #f8f9fa;
+  }
+  
+  /* Poppins Font Styles */
+  .poppins-thin,
+  .poppins-extralight,
+  .poppins-light,
+  .poppins-regular,
+  .poppins-medium,
+  .poppins-semibold,
+  .poppins-bold,
+  .poppins-black,
+  .poppins-thin-italic,
+  .poppins-extralight-italic,
+  .poppins-light-italic,
+  .poppins-medium-italic,
+  .poppins-semibold-italic,
+  .poppins-bold-italic,
+  .poppins-extrabold-italic,
+  .poppins-black-italic {
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .poppins-thin {
+    font-weight: 100;
+  }
+  
+  .poppins-extralight {
+    font-weight: 200;
+  }
+  
+  .poppins-light {
+    font-weight: 300;
+  }
+  
+  .poppins-regular {
+    font-weight: 400;
+  }
+  
+  .poppins-medium {
+    font-weight: 500;
+  }
+  
+  .poppins-semibold {
+    font-weight: 600;
+  }
+  
+  .poppins-bold {
+    font-weight: 700;
+  }
+  
+  .poppins-black {
+    font-weight: 900;
+  }
+  
+  .poppins-thin-italic,
+  .poppins-extralight-italic,
+  .poppins-light-italic,
+  .poppins-medium-italic,
+  .poppins-semibold-italic,
+  .poppins-bold-italic,
+  .poppins-extrabold-italic,
+  .poppins-black-italic {
+    font-style: italic;
+  }
+  
