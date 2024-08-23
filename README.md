@@ -1,5 +1,4 @@
 # Tabla de Contenidos
-
 1.Descripcion
 2.Requisitos
 3.Instalacion
@@ -56,3 +55,4 @@ Este proyecto contiene un README para el entendimiento de los usuarios que esten
 Seguridad:
 autentificacion y autorizacion: utilizando JWT y almacenando el token y rol con ssesionstorage de manera segura.
 hashing, se utiliza bcryptjs para el hasheo de las contraseñas antes de ser almacenadas en la base de datos
+
