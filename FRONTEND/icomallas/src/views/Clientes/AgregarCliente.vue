@@ -1,128 +1,94 @@
 <template>
   <div>
-    <h1>Clientes</h1>
-    <div v-if="clientes.length > 0">
-      <div v-for="cliente in clientes" :key="cliente.id" class="divCliente">
-        <p> Cliente:{{ cliente.razon_social }}</p>
-        <p> NIT: {{ cliente.nit }}</p>
-        <p> Correo: {{ cliente.correo }}</p>
-        <p> Telefono: {{ cliente.telefono }}</p>
-        <button class="trash" @click="handleDelete(cliente.id)">
-          Delete
-        </button>
+    <h1>Agregar un nuevo cliente:</h1>
+    <div>
+      <div class="divAgregarCliente">
+        <div>
+          <label>Razón social</label>
+          <input v-model="razon_social" type="text">
+        </div>
+        <div>
+          <label>NIT</label>
+          <input v-model="nit" type="text">
+        </div>
+        <div>
+          <label>Correo</label>
+          <input v-model="correo" type="email">
+        </div>
+        <div>
+          <label>Telefono</label>
+          <input v-model="telefono" type="tel">
+        </div>
+        <div>
+          <label>Estado</label>
+          <input v-model="estado" type="checkbox">
+        </div>
       </div>
     </div>
-    <div v-else>
-      <p>No hay clientes para mostrar.</p>
+    <div>
+      <button class="Add" @click="handleSubmit">Agregar</button>
     </div>
-    <button class="btnAdd" @click="handleEdit">
-      +
-    </button>
+    <button class="btnAdd" @click="navigateBack">{{'<'}} Volver</button>
   </div>
 </template>
-
 <script>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 export default {
-  name: 'ClientesView',
+  name: 'AgregarClienteView',
   setup() {
     const router = useRouter();
-    const clientes = ref([]);
-    const error = ref('');
+    const razon_social = ref('');
+    const nit = ref('');
+    const correo = ref('');
+    const telefono = ref('');
+    const estado = ref(false); // Default to false for a checkbox
+    const usuario = sessionStorage.getItem('usuario'); // Ensure this is properly retrieved
 
-    const getClientes = async () => {
-      const token = sessionStorage.getItem('token');
-      if (!token) {
-        error.value = 'Token no encontrado';
-        return;
+   const handleSubmit = async () => {
+  const token = sessionStorage.getItem('token');
+  if (!token) {
+    console.error('Token no encontrado');
+    return;
+  }
+  try {
+    const result = await axios.post(
+      'http://localhost:3001/clientes/crear',
+      {
+        nit: nit.value,
+        razon_social: razon_social.value,
+        correo: correo.value,
+        telefono: telefono.value,
+        usuario_creador_id: usuario,
+        estado: estado.value
+      },
+      {
+       headers: { Authorization: token }
       }
-      try {
-        const response = await axios.get('http://localhost:3001/clientes/consultar', {
-          headers: { Authorization: token }
-        });
-        console.log('Response data:', response.data);
-        clientes.value = response.data.clientes || [];
-        console.log('Clientes array:', clientes.value);
-        if (response.data.mensaje !== 'Okay') {
-          error.value = 'Respuesta de la API indica error: ' + response.data.mensaje;
-        } else {
-          clientes.value = response.data.clientes || [];
-        }
-      } catch (err) {
-        console.error(err.response ? err.response.data : err.message);
-        error.value = 'Error al obtener datos: ' + (err.response ? err.response.data : err.message);
-      }
+    );
+    console.log(result.data);
+    router.push('/clientes');
+  } catch (err) {
+    console.error('Error al agregar cliente:', err.response ? err.response.data : err.message);
+  }
+};
+
+
+    const navigateBack = () => {
+      router.back();
     };
-
-    const handleEdit = () => {
-      router.push('/agregarCliente');
-    };
-
-    const handleDelete = async (id) => {
-      const token = sessionStorage.getItem('token');
-      if (!token) {
-        error.value = 'Token no encontrado';
-        return;
-      }
-      try {
-        const response = await axios.delete(`http://localhost:3001/clientes/borrar/${id}`, {
-          headers: { Authorization: `${token}` }
-        });
-        console.log('Respuesta:', response.data);
-        if (response.data.mensaje !== 'Deleted Cliente') {
-          error.value = 'Error al eliminar el cliente: ' + response.data.mensaje;
-        } else {
-          getClientes();
-        }
-      } catch (err) {
-        console.error(err.response ? err.response.data : err.message);
-        error.value = 'Error al eliminar cliente: ' + (err.response ? err.response.data : err.message);
-      }
-    };
-
-    onMounted(() => {
-      getClientes();
-    });
 
     return {
-      clientes,
-      handleEdit,
-      handleDelete,
-      error
+      nit,
+      razon_social,
+      correo,
+      telefono,
+      estado,
+      handleSubmit,
+      navigateBack
     };
   }
 };
 </script>
-
-<style scoped>
-.divCliente {
-  margin-bottom: 10px;
-  margin-bottom: 10px;
-    text-align: justify;
-    padding: 5%;
-}
-
-.trash {
-  margin-left: 10px;
-      background-color: #a31919;
-    color: white;
-    padding: 2%;
-    border-radius: 8px;
-}
-
-.btnAdd {
-  margin-top: 20px;
-}
-
-.error {
-  color: red;
-}
-h1{
-    margin: 15%;
-       
-    text-decoration: underline;
-}
-</style>

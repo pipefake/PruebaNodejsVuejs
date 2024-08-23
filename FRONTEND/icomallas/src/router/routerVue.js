@@ -5,6 +5,7 @@ import Login from '@/views/Login/Login.vue';
 import Register from '@/views/Register/Register.vue';
 import Clientes from '@/views/Clientes/Clientes';
 import AgregarCliente from '@/views/Clientes/AgregarCliente';
+import EditarCliente from '@/views/Clientes/EditarCliente';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     path: '/agregarCliente',
     name: 'AgregarCliente',
     component: AgregarCliente
+  },
+  {
+    path: '/editarClientes',
+    name: 'EditarCliente',
+    component: EditarCliente
   }
 ];
 

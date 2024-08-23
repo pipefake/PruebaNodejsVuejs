@@ -3,19 +3,22 @@
     <h1>Clientes</h1>
     <div v-if="clientes.length > 0">
       <div v-for="cliente in clientes" :key="cliente.id" class="divCliente">
-        <p> Cliente:{{ cliente.razon_social }}</p>
-        <p> NIT: {{ cliente.nit }}</p>
-        <p> Correo: {{ cliente.correo }}</p>
-        <p> Telefono: {{ cliente.telefono }}</p>
+        <p>Cliente: {{ cliente.razon_social }}</p>
+        <p>NIT: {{ cliente.nit }}</p>
+        <p>Correo: {{ cliente.correo }}</p>
+        <p>Teléfono: {{ cliente.telefono }}</p>
+        <button class="Edit" @click="handleEditar(cliente.id)">
+          Editar
+        </button>
         <button class="trash" @click="handleDelete(cliente.id)">
-          Delete
+          Eliminar
         </button>
       </div>
     </div>
     <div v-else>
       <p>No hay clientes para mostrar.</p>
     </div>
-    <button class="btnAdd" @click="handleEdit">
+    <button class="btnAdd" @click="navigateToAddClient">
       +
     </button>
   </div>
@@ -43,22 +46,17 @@ export default {
         const response = await axios.get('http://localhost:3001/clientes/consultar', {
           headers: { Authorization: token }
         });
-        console.log('Response data:', response.data);
         clientes.value = response.data.clientes || [];
-        console.log('Clientes array:', clientes.value);
         if (response.data.mensaje !== 'Okay') {
           error.value = 'Respuesta de la API indica error: ' + response.data.mensaje;
-        } else {
-          clientes.value = response.data.clientes || [];
         }
       } catch (err) {
-        console.error(err.response ? err.response.data : err.message);
         error.value = 'Error al obtener datos: ' + (err.response ? err.response.data : err.message);
       }
     };
 
-    const handleEdit = () => {
-      router.push('/agregarCliente');
+    const handleEditar = (id) => {
+      router.push({ path: '/editarClientes', query: { id: id } });
     };
 
     const handleDelete = async (id) => {
@@ -69,18 +67,20 @@ export default {
       }
       try {
         const response = await axios.delete(`http://localhost:3001/clientes/borrar/${id}`, {
-          headers: { Authorization: `${token}` }
+          headers: { Authorization: token }
         });
-        console.log('Respuesta:', response.data);
         if (response.data.mensaje !== 'Deleted Cliente') {
           error.value = 'Error al eliminar el cliente: ' + response.data.mensaje;
         } else {
           getClientes();
         }
       } catch (err) {
-        console.error(err.response ? err.response.data : err.message);
         error.value = 'Error al eliminar cliente: ' + (err.response ? err.response.data : err.message);
       }
+    };
+
+    const navigateToAddClient = () => {
+      router.push('/agregarCliente');
     };
 
     onMounted(() => {
@@ -89,8 +89,9 @@ export default {
 
     return {
       clientes,
-      handleEdit,
+      handleEditar,
       handleDelete,
+      navigateToAddClient,
       error
     };
   }
@@ -100,17 +101,24 @@ export default {
 <style scoped>
 .divCliente {
   margin-bottom: 10px;
-  margin-bottom: 10px;
-    text-align: justify;
-    padding: 5%;
+  text-align: justify;
+  padding: 15px;
 }
 
 .trash {
   margin-left: 10px;
-      background-color: #a31919;
-    color: white;
-    padding: 2%;
-    border-radius: 8px;
+  background-color: #a31919;
+  color: white;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.Edit {
+  margin-left: 10px;
+  background-color: #146732;
+  color: white;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .btnAdd {
@@ -120,9 +128,9 @@ export default {
 .error {
   color: red;
 }
-h1{
-    margin: 15%;
-       
-    text-decoration: underline;
+
+h1 {
+  margin: 59px;
+  text-decoration: underline;
 }
 </style>

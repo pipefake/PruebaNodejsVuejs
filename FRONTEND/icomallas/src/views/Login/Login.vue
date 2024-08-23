@@ -61,13 +61,15 @@ export default {
         console.log(respuesta);
         const mensaje = respuesta.data.mensaje;
         const token = respuesta.data.token;
-
+        const id = respuesta.data.id;
+ console.log(id);
         if (mensaje !== 'Bienvenido') {
           console.log('Algo anda mal');
           // Optionally handle errors or show a message
         } else {
           console.log('Bienvenido');
           sessionStorage.setItem('token', token);
+          localStorage.setItem('usuario', id);
           this.$router.push('/clientes'); // Navigate to the /inicio route
         }
       } catch (err) {

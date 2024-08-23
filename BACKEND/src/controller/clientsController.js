@@ -38,7 +38,7 @@ const registrarCliente = async (req, res) => {
         correo,
         telefono,
         usuario_creador_id,
-        estado = 'Activo' // Valor predeterminado para 'estado'
+        estado = 'Activo'
     } = req.body;
 
     if (!nit || !razon_social || !correo) {
@@ -130,6 +130,7 @@ const actualizarCliente = async (req, res) => {
             'SELECT * FROM clientes WHERE ID = $1',
             [id]
         );
+
         if (clienteExistente.rows.length === 0) {
             return res.status(404).json({
                 mensaje: 'Cliente no encontrado'
@@ -140,6 +141,7 @@ const actualizarCliente = async (req, res) => {
             'UPDATE clientes SET NIT = $1, RAZON_SOCIAL = $2, CORREO = $3, TELEFONO = $4, USUARIO_CREADOR_ID = $5, ESTADO = $6 WHERE ID = $7 RETURNING *',
             [nit, razon_social, correo, telefono, usuario_creador_id, estado, id]
         );
+
         const clienteActualizado = resultado.rows[0];
 
         res.status(200).json({
@@ -147,9 +149,13 @@ const actualizarCliente = async (req, res) => {
             cliente: clienteActualizado
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).json('Error al actualizar cliente');
+        console.error('Error al actualizar cliente:', err);
+        res.status(500).json({
+            mensaje: 'Error al actualizar cliente',
+            error: err.message
+        });
     }
+
 };
 
 // Eliminar un cliente
